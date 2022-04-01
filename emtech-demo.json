@@ -1,0 +1,123 @@
+[
+    {
+        "id": "dbb1ce63931cdb48",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "586a5fc02f365a95",
+        "type": "serial in",
+        "z": "dbb1ce63931cdb48",
+        "name": "",
+        "serial": "a13aeb659d05bba0",
+        "x": 290,
+        "y": 180,
+        "wires": [
+            [
+                "ade03e42700ae4f0"
+            ]
+        ]
+    },
+    {
+        "id": "3ac44be2f247a692",
+        "type": "debug",
+        "z": "dbb1ce63931cdb48",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 490,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "ade03e42700ae4f0",
+        "type": "function",
+        "z": "dbb1ce63931cdb48",
+        "name": "",
+        "func": "var data = msg.payload.split(\",\");\n\nvar temp = parseFloat(data[0]);\nvar gas = parseFloat(data[1]);\nvar fire = parseFloat(data[2]);\n\nsensorData = {\n    temperature: temp,\n    gas: gas,\n    flame: fire\n}\nvar newMsg = {payload: sensorData}\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 180,
+        "wires": [
+            [
+                "3ac44be2f247a692",
+                "26f2d0d182e49a0a"
+            ]
+        ]
+    },
+    {
+        "id": "26f2d0d182e49a0a",
+        "type": "mqtt out",
+        "z": "dbb1ce63931cdb48",
+        "name": "gas-monitor-01",
+        "topic": "/v2.0/devices/gas-monitor-01",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "d2b9a9a5.812e58",
+        "x": 700,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "a13aeb659d05bba0",
+        "type": "serial-port",
+        "serialport": "COM3",
+        "serialbaud": "9600",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
+    },
+    {
+        "id": "d2b9a9a5.812e58",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "industrial.api.ubidots.com",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "sessionExpiry": ""
+    }
+]
